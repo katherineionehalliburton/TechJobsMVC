@@ -17,24 +17,24 @@ namespace TechJobs.Controllers
         
         public IActionResult Results(string searchType, string searchTerm)
         {
+            ViewBag.columns = ListController.columnChoices;
             List<Dictionary<String, String>> jobs = new List<Dictionary<string, string>>();
 
-            if (column.Equals("all"))
+            if (searchType.Equals("all"))
             {
                 //ViewBag.columns = ListController.columnChoices;
                 ViewBag.title = "Results:";
                 jobs = JobData.FindByValue(searchTerm);                
                 ViewBag.jobs = jobs;
-                return View("Search/Index");
             }
             else
             {
                 jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
                 ViewBag.title = "All Selected Values";
                 ViewBag.column = searchType;
-                ViewBag.items = jobs;
-                return View("Search/Index");
+                ViewBag.jobs = jobs;
             }
+            return View("Index");
         }
     }
 }
